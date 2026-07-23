@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giro d'Italia — 2027 Projection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:        #E10B7A;   /* maglia rosa */
+    --pink-deep:   #97104f;
+    --pink-pale:   #FBE3EF;
+    --ink:         #221721;
+    --paper:       #FFF8FB;
+    --paper-dim:   #F6E9F0;
+    --blue-kom:    #1C3F5E;   /* mountains classification blue */
+    --gold-tt:     #B7912B;   /* time trial accent */
+    --line:        rgba(34,23,33,0.12);
+    --shadow:      0 12px 30px -14px rgba(151,16,79,0.35);
+
+    --display: 'Bebas Neue', sans-serif;
+    --serif:   'Source Serif 4', serif;
+    --mono:    'JetBrains Mono', monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--serif);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  a{color:var(--pink-deep);}
+
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:110px 24px 90px;
+    background:
+      radial-gradient(1200px 480px at 15% -10%, rgba(255,255,255,0.5), transparent 60%),
+      linear-gradient(160deg, var(--pink) 0%, var(--pink-deep) 68%, var(--ink) 130%);
+    color:var(--paper);
+    overflow:hidden;
+    text-align:center;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:auto 0 -1px 0; height:64px;
+    background:var(--paper);
+    clip-path:polygon(0 100%, 0 40%, 4% 55%, 8% 30%, 12% 60%, 16% 20%, 20% 65%, 24% 35%, 28% 70%,
+      32% 25%, 36% 55%, 40% 15%, 44% 60%, 48% 30%, 52% 68%, 56% 20%, 60% 58%, 64% 35%,
+      68% 72%, 72% 25%, 76% 62%, 80% 18%, 84% 60%, 88% 30%, 92% 66%, 96% 20%, 100% 55%, 100% 100%);
+  }
+  .eyebrow{
+    font-family:var(--mono); letter-spacing:.28em; text-transform:uppercase;
+    font-size:12px; opacity:.85; margin:0 0 18px;
+  }
+  .hero h1{
+    font-family:var(--display);
+    font-weight:400;
+    font-size:clamp(56px, 11vw, 128px);
+    letter-spacing:.01em;
+    line-height:.92;
+    margin:0;
+    text-shadow:0 6px 30px rgba(0,0,0,.18);
+  }
+  .hero h1 span{display:block; font-size:.42em; opacity:.92; letter-spacing:.08em;}
+  .hero .sub{
+    max-width:560px; margin:26px auto 0;
+    font-size:16.5px; opacity:.95;
+  }
+  .status-pill{
+    display:inline-flex; align-items:center; gap:8px;
+    margin-top:30px; padding:9px 18px;
+    background:rgba(255,255,255,0.14);
+    border:1px solid rgba(255,255,255,0.4);
+    border-radius:999px;
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.04em;
+  }
+  .status-pill .dot{width:8px; height:8px; border-radius:50%; background:#FFD84D; box-shadow:0 0 0 4px rgba(255,216,77,0.25);}
+
+  /* ---------- NOTICE ---------- */
+  .notice{
+    margin:56px auto 0; max-width:720px;
+    background:var(--paper-dim);
+    border-left:4px solid var(--pink);
+    border-radius:4px;
+    padding:18px 22px;
+    font-size:14.5px;
+  }
+  .notice b{color:var(--pink-deep);}
+
+  /* ---------- SECTION HEADERS ---------- */
+  section{padding:64px 0 8px;}
+  .section-head{
+    display:flex; align-items:baseline; gap:16px;
+    margin-bottom:36px;
+  }
+  .section-head .num{
+    font-family:var(--mono); color:var(--pink); font-size:13px; letter-spacing:.1em;
+  }
+  .section-head h2{
+    font-family:var(--display); font-weight:400; letter-spacing:.02em;
+    font-size:clamp(30px,4.4vw,44px); margin:0; color:var(--ink);
+  }
+  .section-head::after{
+    content:""; flex:1; height:1px; background:var(--line); align-self:center;
+  }
+
+  /* ---------- STAGE TIMELINE (signature element) ---------- */
+  .timeline{position:relative; padding-left:46px;}
+  .timeline::before{
+    content:"";
+    position:absolute; left:14px; top:6px; bottom:6px; width:2px;
+    background:repeating-linear-gradient(to bottom, var(--pink) 0 10px, transparent 10px 16px);
+  }
+  .stage{
+    position:relative; padding:18px 20px 18px 22px;
+    margin-bottom:14px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:10px;
+    box-shadow:var(--shadow);
+    opacity:0; transform:translateY(14px);
+    animation:rise .6s ease forwards;
+  }
+  .stage:nth-child(n){animation-delay:calc(var(--i, 0) * 22ms);}
+  @keyframes rise{to{opacity:1; transform:none;}}
+
+  .stage::before{
+    content:"";
+    position:absolute; left:-38px; top:24px;
+    width:14px; height:14px; border-radius:50%;
+    background:var(--marker, var(--pink));
+    border:3px solid var(--paper);
+    box-shadow:0 0 0 2px var(--marker, var(--pink));
+  }
+  .stage.rest{
+    background:transparent; box-shadow:none; border:1px dashed var(--line);
+  }
+  .stage.rest::before{background:var(--ink); box-shadow:0 0 0 2px var(--ink);}
+
+  .stage-top{
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    font-family:var(--mono); font-size:12.5px; color:#6b5763;
+  }
+  .stage-num{
+    font-family:var(--display); font-size:26px; color:var(--pink-deep); letter-spacing:.02em;
+    min-width:38px;
+  }
+  .badge{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase;
+    padding:3px 9px; border-radius:999px; color:#fff; background:var(--marker,var(--pink));
+  }
+  .stage-route{
+    font-family:var(--serif); font-size:17px; margin:8px 0 4px; color:var(--ink);
+  }
+  .stage-route .arrow{color:var(--pink); margin:0 6px; font-family:var(--mono);}
+  .stage-meta{
+    display:flex; gap:18px; flex-wrap:wrap;
+    font-family:var(--mono); font-size:12px; color:#7a6873; margin-top:6px;
+  }
+  .stage-meta span b{color:var(--ink); font-weight:600;}
+  .stage-note{font-size:13.5px; color:#54424c; margin-top:6px; font-style:italic;}
+
+  .stage.rest .stage-route{font-family:var(--display); font-size:22px; letter-spacing:.03em; color:var(--ink);}
+
+  /* legend */
+  .legend{display:flex; flex-wrap:wrap; gap:14px; margin:22px 0 40px; font-family:var(--mono); font-size:12px;}
+  .legend .item{display:flex; align-items:center; gap:7px; color:#6b5763;}
+  .legend .swatch{width:11px; height:11px; border-radius:3px;}
+
+  /* ---------- LIST SECTIONS ---------- */
+  .card-grid{display:grid; grid-template-columns:1fr; gap:12px; margin-bottom:8px;}
+  .simple-card{
+    background:#fff; border:1px solid var(--line); border-radius:10px;
+    padding:16px 18px; display:flex; align-items:flex-start; gap:12px;
+  }
+  .simple-card .chk{
+    flex:0 0 auto; width:18px; height:18px; margin-top:2px;
+    border:2px solid var(--pink); border-radius:5px;
+  }
+  .simple-card .txt b{display:block; font-size:15px; margin-bottom:2px;}
+  .simple-card .txt span{font-size:13px; color:#7a6873;}
+
+  table.airbnb{width:100%; border-collapse:collapse; margin-bottom:16px; font-size:14px;}
+  table.airbnb th{
+    font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em;
+    text-align:left; color:#7a6873; padding:10px 12px; border-bottom:2px solid var(--pink);
+  }
+  table.airbnb td{padding:12px; border-bottom:1px solid var(--line); vertical-align:top;}
+  table.airbnb tr:hover td{background:var(--pink-pale);}
+
+  footer{
+    margin-top:80px; padding:40px 24px 60px; text-align:center;
+    font-family:var(--mono); font-size:12px; color:#8a7580;
+  }
+  footer .jersey{
+    display:inline-block; width:14px; height:14px; border-radius:50%;
+    background:var(--pink); vertical-align:middle; margin:0 6px;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <p class="eyebrow">Grand Tour Projection · Two Wheels, Twenty‑One Days</p>
+  <h1>GIRO D'ITALIA<span>2027</span></h1>
+  <p class="sub">A stage-by-stage mock, built in the shape of a modern Giro — three weeks, two rest days, one maglia rosa.</p>
+  <div class="status-pill"><span class="dot"></span> PLACEHOLDER ROUTE — official parcours expected October 2026</div>
+</div>
+
+<div class="wrap">
+
+  <div class="notice">
+    <b>Status: mock.</b> RCS Sport hasn't announced the 2027 route yet — Grand Tour routes are typically revealed the October before. Everything below follows the usual Giro cadence (21 stages, 2 rest days, a spread of flat / hilly / mountain / time‑trial days) with placeholder cities and distances, ready to be swapped for the real thing once it drops.
+  </div>
+
+  <section id="etapas">
+    <div class="section-head"><span class="num">01</span><h2>Etapas</h2></div>
+
+    <div class="legend">
+      <div class="item"><span class="swatch" style="background:#E10B7A"></span>Flat / Sprint</div>
+      <div class="item"><span class="swatch" style="background:#7a3a5c"></span>Hilly</div>
+      <div class="item"><span class="swatch" style="background:#1C3F5E"></span>Mountain</div>
+      <div class="item"><span class="swatch" style="background:#B7912B"></span>Time Trial</div>
+      <div class="item"><span class="swatch" style="background:#221721"></span>Rest Day</div>
+    </div>
+
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <section id="enlaces">
+    <div class="section-head"><span class="num">02</span><h2>Enlaces de Interés</h2></div>
+    <div class="card-grid">
+      <div class="simple-card"><div class="chk"></div><div class="txt"><b>Official Giro d'Italia site</b><span>Check back October 2026 for the route reveal</span></div></div>
+      <div class="simple-card"><div class="chk"></div><div class="txt"><b>Bike logistics</b><span>Rental vs. shipping your own bike into Italy</span></div></div>
+      <div class="simple-card"><div class="chk"></div><div class="txt"><b>Trenitalia routes</b><span>Regional trains for stage-to-stage transfers</span></div></div>
+      <div class="simple-card"><div class="chk"></div><div class="txt"><b>May weather patterns</b><span>Historical averages by region along the likely route</span></div></div>
+    </div>
+  </section>
+
+  <section id="airbnbs">
+    <div class="section-head"><span class="num">03</span><h2>Airbnb's</h2></div>
+    <table class="airbnb">
+      <thead><tr><th>City / Region</th><th>Dates</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>TBD — near Grande Partenza</td><td>May 7–9</td><td>Base for opening ITT + first sprint stages</td></tr>
+        <tr><td>TBD — Rest Day 1 base</td><td>May 16–17</td><td>Laundry, recovery, easy spin</td></tr>
+        <tr><td>TBD — Rest Day 2 base</td><td>May 23–24</td><td>Deep in the mountains block</td></tr>
+        <tr><td>TBD — finish city</td><td>May 30–31</td><td>Milan or Rome, depending on route</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="literatura">
+    <div class="section-head"><span class="num">04</span><h2>Literatura</h2></div>
+    <div class="card-grid">
+      <div class="simple-card"><div class="chk"></div><div class="txt"><b>Giro d'Italia history</b><span>Placeholder — swap for your usual pre-trip reading picks</span></div></div>
+      <div class="simple-card"><div class="chk"></div><div class="txt"><b>Regional cuisine guide</b><span>Matches whichever regions the route passes through</span></div></div>
+      <div class="simple-card"><div class="chk"></div><div class="txt"><b>Climbing profiles</b><span>Gradient guide for Dolomites &amp; Alps sectors</span></div></div>
+    </div>
+  </section>
+
+  <section id="podcast">
+    <div class="section-head"><span class="num">05</span><h2>Podcast</h2></div>
+    <div class="card-grid">
+      <div class="simple-card"><div class="chk"></div><div class="txt"><b>Giro preview episode</b><span>Release nearer to May 2027</span></div></div>
+      <div class="simple-card"><div class="chk"></div><div class="txt"><b>Italian language &amp; culture</b><span>For the trip itself</span></div></div>
+    </div>
+  </section>
+
+  <section id="musica">
+    <div class="section-head"><span class="num">06</span><h2>Música</h2></div>
+    <div class="card-grid">
+      <div class="simple-card"><div class="chk"></div><div class="txt"><b>Ride playlist</b><span>Italian classics + climbing cadence tracks</span></div></div>
+    </div>
+  </section>
+
+</div>
+
+<footer>MAGLIA ROSA PROJECTION <span class="jersey"></span> BUILT FROM THE FRANCE TOUR TEMPLATE <span class="jersey"></span> ROUTE TBD</footer>
+
+<script>
+const stages = [
+  {n:1,  date:"Sat, May 8",  type:"tt",   from:"Grande Partenza city (TBD)", to:"TBD", dist:"~15",  elev:"~150",  note:"Opening ITT — pink jersey up for grabs day one."},
+  {n:2,  date:"Sun, May 9",  type:"flat", from:"TBD", to:"TBD", dist:"~180", elev:"~800", note:"Sprinters' stage."},
+  {n:3,  date:"Mon, May 10", type:"hilly",from:"TBD", to:"TBD", dist:"~160", elev:"~2,200", note:"Punchy finish, breakaway terrain."},
+  {n:4,  date:"Tue, May 11", type:"flat", from:"TBD", to:"TBD", dist:"~190", elev:"~600", note:"Transfer toward the mainland."},
+  {n:5,  date:"Wed, May 12", type:"mtn",  from:"TBD", to:"TBD", dist:"~150", elev:"~3,500", note:"First real GC shake-up."},
+  {n:6,  date:"Thu, May 13", type:"flat", from:"TBD", to:"TBD", dist:"~200", elev:"~700", note:"Sprint."},
+  {n:7,  date:"Fri, May 14", type:"hilly",from:"TBD", to:"TBD", dist:"~170", elev:"~2,500", note:""},
+  {n:8,  date:"Sat, May 15", type:"mtn",  from:"TBD", to:"TBD", dist:"~180", elev:"~4,500", note:"Dolomites or Alps preview."},
+  {n:9,  date:"Sun, May 16", type:"hilly",from:"TBD", to:"TBD", dist:"~150", elev:"~2,000", note:"Signature 'unusual terrain' stage — gravel sectors."},
+  {rest:1, date:"Mon, May 17", note:"Transfer day."},
+  {n:10, date:"Tue, May 18", type:"flat", from:"TBD", to:"TBD", dist:"~190", elev:"~500", note:""},
+  {n:11, date:"Wed, May 19", type:"hilly",from:"TBD", to:"TBD", dist:"~160", elev:"~2,300", note:""},
+  {n:12, date:"Thu, May 20", type:"flat", from:"TBD", to:"TBD", dist:"~210", elev:"~600", note:"Sprint."},
+  {n:13, date:"Fri, May 21", type:"tt",   from:"TBD", to:"TBD", dist:"~30",  elev:"~300", note:"Mid-race ITT — GC-defining."},
+  {n:14, date:"Sat, May 22", type:"mtn",  from:"TBD", to:"TBD", dist:"~190", elev:"~5,000", note:"High mountains begin."},
+  {n:15, date:"Sun, May 23", type:"mtn",  from:"TBD", to:"TBD", dist:"~170", elev:"~5,200", note:"Queen stage candidate #1 — summit finish."},
+  {rest:2, date:"Mon, May 24", note:"Recovery / transfer."},
+  {n:16, date:"Tue, May 25", type:"mtn",  from:"TBD", to:"TBD", dist:"~200", elev:"~5,500", note:"Dolomites."},
+  {n:17, date:"Wed, May 26", type:"flat", from:"TBD", to:"TBD", dist:"~180", elev:"~800", note:"Legs recover before the final week."},
+  {n:18, date:"Thu, May 27", type:"mtn",  from:"TBD", to:"TBD", dist:"~160", elev:"~4,800", note:""},
+  {n:19, date:"Fri, May 28", type:"mtn",  from:"TBD", to:"TBD", dist:"~180", elev:"~5,800", note:"The queen stage — summit finish."},
+  {n:20, date:"Sat, May 29", type:"mtn",  from:"TBD", to:"TBD", dist:"~130", elev:"~4,500", note:"Last GC chance — short and explosive."},
+  {n:21, date:"Sun, May 30", type:"flat", from:"TBD", to:"TBD", dist:"~130", elev:"~300", note:"Ceremonial finish — Milan or Rome."},
+];
+
+const colors = { flat:"#E10B7A", hilly:"#7a3a5c", mtn:"#1C3F5E", tt:"#B7912B" };
+const labels = { flat:"Flat", hilly:"Hilly", mtn:"Mountain", tt:"Time Trial" };
+
+const el = document.getElementById('timeline');
+stages.forEach((s, i) => {
+  const div = document.createElement('div');
+  div.style.setProperty('--i', i);
+  if (s.rest) {
+    div.className = 'stage rest';
+    div.innerHTML = `
+      <div class="stage-top">REST DAY ${s.rest} · ${s.date}</div>
+      <div class="stage-route">Recovery</div>
+      <div class="stage-note">${s.note}</div>`;
+  } else {
+    div.className = 'stage';
+    div.style.setProperty('--marker', colors[s.type]);
+    div.innerHTML = `
+      <div class="stage-top">
+        <span class="stage-num">${String(s.n).padStart(2,'0')}</span>
+        <span class="badge" style="background:${colors[s.type]}">${labels[s.type]}</span>
+        <span>${s.date}</span>
+      </div>
+      <div class="stage-route">${s.from}<span class="arrow">→</span>${s.to}</div>
+      <div class="stage-meta"><span><b>${s.dist}</b> km</span><span><b>${s.elev}</b> m gain</span></div>
+      ${s.note ? `<div class="stage-note">${s.note}</div>` : ''}`;
+  }
+  el.appendChild(div);
+});
+</script>
+
+</body>
+</html>
