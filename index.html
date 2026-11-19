@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Giro d'Italia — 2027 Projection</title>
+<title>Giro d'Italia 2027</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -79,19 +79,42 @@
     max-width:560px; margin:26px auto 0;
     font-size:16.5px; opacity:.95;
   }
+  .hero-stats{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:12px;
+    max-width:640px; margin:30px auto 0;
+  }
+  .stat{
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.35);
+    border-radius:10px;
+    padding:14px 10px 12px;
+  }
+  .stat b{
+    display:block; font-family:var(--display); font-weight:400;
+    font-size:clamp(28px, 5vw, 42px); line-height:1; letter-spacing:.02em;
+  }
+  .stat span{
+    display:block; margin-top:6px;
+    font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; opacity:.9;
+  }
+  .mine{
+    margin:24px auto 0; font-family:var(--mono); font-size:13px; letter-spacing:.04em;
+  }
+  .mine b{font-weight:700;}
   .status-pill{
     display:inline-flex; align-items:center; gap:8px;
-    margin-top:30px; padding:9px 18px;
+    margin-top:22px; padding:9px 18px;
     background:rgba(255,255,255,0.14);
     border:1px solid rgba(255,255,255,0.4);
     border-radius:999px;
     font-family:var(--mono); font-size:12.5px; letter-spacing:.04em;
   }
-  .status-pill .dot{width:8px; height:8px; border-radius:50%; background:#FFD84D; box-shadow:0 0 0 4px rgba(255,216,77,0.25);}
+  .status-pill .dot{flex:0 0 auto; width:8px; height:8px; border-radius:50%; background:#FFD84D; box-shadow:0 0 0 4px rgba(255,216,77,0.25);}
+  .status-pill a{color:inherit;}
 
   /* ---------- NOTICE ---------- */
   .notice{
-    margin:56px auto 0; max-width:720px;
+    margin:28px 0 0;
     background:var(--paper-dim);
     border-left:4px solid var(--pink);
     border-radius:4px;
@@ -99,6 +122,8 @@
     font-size:14.5px;
   }
   .notice b{color:var(--pink-deep);}
+  .notice ul{margin:8px 0 0; padding-left:20px;}
+  .notice li{margin-bottom:4px;}
 
   /* ---------- SECTION HEADERS ---------- */
   section{padding:64px 0 8px;}
@@ -116,6 +141,7 @@
   .section-head::after{
     content:""; flex:1; height:1px; background:var(--line); align-self:center;
   }
+  .section-intro{margin:-18px 0 26px; font-size:15.5px; color:#54424c;}
 
   /* ---------- STAGE TIMELINE (signature element) ---------- */
   .timeline{position:relative; padding-left:46px;}
@@ -149,6 +175,7 @@
     background:transparent; box-shadow:none; border:1px dashed var(--line);
   }
   .stage.rest::before{background:var(--ink); box-shadow:0 0 0 2px var(--ink);}
+  .stage.going{border-color:rgba(151,16,79,0.45);}
 
   .stage-top{
     display:flex; align-items:center; gap:12px; flex-wrap:wrap;
@@ -162,6 +189,12 @@
     font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase;
     padding:3px 9px; border-radius:999px; color:#fff; background:var(--marker,var(--pink));
   }
+  .tag{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; font-weight:700;
+    padding:2px 9px; border-radius:999px;
+    border:1.5px solid var(--pink-deep); color:var(--pink-deep); background:var(--pink-pale);
+  }
+  .tag.transit{border-style:dashed; border-color:#8a7580; color:#6b5763; background:transparent; font-weight:500;}
   .stage-route{
     font-family:var(--serif); font-size:17px; margin:8px 0 4px; color:var(--ink);
   }
@@ -172,6 +205,7 @@
   }
   .stage-meta span b{color:var(--ink); font-weight:600;}
   .stage-note{font-size:13.5px; color:#54424c; margin-top:6px; font-style:italic;}
+  .stage-note b{font-style:normal; color:var(--pink-deep);}
 
   .stage.rest .stage-route{font-family:var(--display); font-size:22px; letter-spacing:.03em; color:var(--ink);}
 
@@ -180,12 +214,27 @@
   .legend .item{display:flex; align-items:center; gap:7px; color:#6b5763;}
   .legend .swatch{width:11px; height:11px; border-radius:3px;}
 
+  /* ---------- MI SEMANA ---------- */
+  .week{display:grid; gap:12px;}
+  .day-card{
+    display:grid; grid-template-columns:96px 1fr; gap:16px; align-items:start;
+    background:#fff; border:1px solid var(--line); border-radius:10px;
+    padding:16px 18px; box-shadow:var(--shadow);
+  }
+  .day-card .day{display:flex; flex-direction:column; align-items:flex-start; gap:6px;}
+  .day-card .day b{font-family:var(--display); font-weight:400; font-size:26px; line-height:1; color:var(--pink-deep); letter-spacing:.02em;}
+  .day-card .txt{font-size:14.5px;}
+  .day-card .txt p{margin:0 0 4px;}
+  .day-card .alt{font-size:13.5px; color:#7a6873; font-style:italic;}
+
   /* ---------- LIST SECTIONS ---------- */
   .card-grid{display:grid; grid-template-columns:1fr; gap:12px; margin-bottom:8px;}
   .simple-card{
     background:#fff; border:1px solid var(--line); border-radius:10px;
     padding:16px 18px; display:flex; align-items:flex-start; gap:12px;
   }
+  a.simple-card{color:inherit; text-decoration:none; transition:border-color .2s;}
+  a.simple-card:hover{border-color:var(--pink);}
   .simple-card .chk{
     flex:0 0 auto; width:18px; height:18px; margin-top:2px;
     border:2px solid var(--pink); border-radius:5px;
@@ -193,12 +242,14 @@
   .simple-card .txt b{display:block; font-size:15px; margin-bottom:2px;}
   .simple-card .txt span{font-size:13px; color:#7a6873;}
 
+  .table-scroll{overflow-x:auto;}
   table.airbnb{width:100%; border-collapse:collapse; margin-bottom:16px; font-size:14px;}
   table.airbnb th{
     font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em;
     text-align:left; color:#7a6873; padding:10px 12px; border-bottom:2px solid var(--pink);
   }
   table.airbnb td{padding:12px; border-bottom:1px solid var(--line); vertical-align:top;}
+  table.airbnb td:first-child{font-family:var(--mono); font-size:12.5px; white-space:nowrap;}
   table.airbnb tr:hover td{background:var(--pink-pale);}
 
   footer{
@@ -209,25 +260,46 @@
     display:inline-block; width:14px; height:14px; border-radius:50%;
     background:var(--pink); vertical-align:middle; margin:0 6px;
   }
+
+  /* ---------- MOBILE ---------- */
+  @media (max-width:560px){
+    .wrap{padding:0 16px;}
+    .hero{padding:84px 16px 84px;}
+    .hero-stats{gap:8px;}
+    .stat{padding:12px 6px 10px;}
+    .stat span{font-size:10px; letter-spacing:.03em;}
+    .status-pill{font-size:11.5px; padding:9px 14px; border-radius:18px; text-align:left;}
+    .timeline{padding-left:36px;}
+    .timeline::before{left:10px;}
+    .stage{padding:16px;}
+    .stage::before{left:-32px;}
+    .day-card{grid-template-columns:1fr; gap:8px;}
+    .day-card .day{flex-direction:row; align-items:center; gap:10px;}
+    .notice{padding:16px 18px;}
+    footer{padding:40px 16px 60px;}
+  }
 </style>
 </head>
 <body>
 
 <div class="hero">
-  <p class="eyebrow">Grand Tour Projection · Two Wheels, Twenty‑One Days</p>
+  <p class="eyebrow">Recorrido oficial · 21 etapas · 2 días de descanso</p>
   <h1>GIRO D'ITALIA<span>2027</span></h1>
-  <p class="sub">A stage-by-stage mock, built in the shape of a modern Giro — three weeks, two rest days, one maglia rosa.</p>
-  <div class="status-pill"><span class="dot"></span> PLACEHOLDER ROUTE — official parcours expected October 2026</div>
+  <p class="sub">Del 8 al 30 de mayo de 2027 · Trieste → Roma</p>
+  <div class="hero-stats">
+    <div class="stat"><b>3.418,9</b><span>km totales</span></div>
+    <div class="stat"><b>162,8</b><span>km promedio por etapa</span></div>
+    <div class="stat"><b>50.250</b><span>m de desnivel</span></div>
+  </div>
+  <p class="mine"><b>Mi Giro:</b> del 24 al 30 de mayo · camper + bici · etapas 16–21</p>
+  <div class="status-pill"><span class="dot"></span> <span>Recorrido oficial publicado por RCS Sport · Fuente: <a href="https://www.giroditalia.it/es/el-recorrido/" target="_blank" rel="noopener">giroditalia.it</a></span></div>
 </div>
 
 <div class="wrap">
 
-  <div class="notice">
-    <b>Status: mock.</b> RCS Sport hasn't announced the 2027 route yet — Grand Tour routes are typically revealed the October before. Everything below follows the usual Giro cadence (21 stages, 2 rest days, a spread of flat / hilly / mountain / time‑trial days) with placeholder cities and distances, ready to be swapped for the real thing once it drops.
-  </div>
-
   <section id="etapas">
     <div class="section-head"><span class="num">01</span><h2>Etapas</h2></div>
+    <p class="section-intro">21 etapas + 2 días de descanso.</p>
 
     <div class="legend">
       <div class="item"><span class="swatch" style="background:#E10B7A"></span>Flat / Sprint</div>
@@ -240,34 +312,93 @@
     <div class="timeline" id="timeline"></div>
   </section>
 
-  <section id="enlaces">
-    <div class="section-head"><span class="num">02</span><h2>Enlaces de Interés</h2></div>
-    <div class="card-grid">
-      <div class="simple-card"><div class="chk"></div><div class="txt"><b>Official Giro d'Italia site</b><span>Check back October 2026 for the route reveal</span></div></div>
-      <div class="simple-card"><div class="chk"></div><div class="txt"><b>Bike logistics</b><span>Rental vs. shipping your own bike into Italy</span></div></div>
-      <div class="simple-card"><div class="chk"></div><div class="txt"><b>Trenitalia routes</b><span>Regional trains for stage-to-stage transfers</span></div></div>
-      <div class="simple-card"><div class="chk"></div><div class="txt"><b>May weather patterns</b><span>Historical averages by region along the likely route</span></div></div>
+  <section id="mi-semana">
+    <div class="section-head"><span class="num">01B</span><h2>Mi semana: camper + bici</h2></div>
+    <p class="section-intro">La fórmula: dejo el camper en la meta la noche anterior, en la mañana bajo y subo el puerto final antes del cierre de vías, y veo la llegada al lado del camper.</p>
+
+    <div class="week">
+      <div class="day-card">
+        <div class="day"><b>Lun 24</b><span class="tag transit">Descanso</span></div>
+        <div class="txt"><p>Recojo el camper en Milán y subo a Aprica (unas 2 h 30 min–3 h).</p></div>
+      </div>
+      <div class="day-card">
+        <div class="day"><b>Mar 25</b><span class="tag">Etapa 16</span></div>
+        <div class="txt">
+          <p>Bucle Aprica → Tirano → Mortirolo por Mazzo (unos 12 km al 10,5%). Veo los dos pasos arriba y vuelvo a Aprica por Monno y Edolo.</p>
+          <p class="alt">Opción corta: Tirano–Aprica (unos 14 km al 5%).</p>
+        </div>
+      </div>
+      <div class="day-card">
+        <div class="day"><b>Mié 26</b><span class="tag transit">En tránsito</span></div>
+        <div class="txt"><p>Me salto la etapa 17. Camper a Madonna di Campiglio por el Passo del Tonale (unas 2 h) y rodada suave hasta el Passo Campo Carlo Magno.</p></div>
+      </div>
+      <div class="day-card">
+        <div class="day"><b>Jue 27</b><span class="tag">Etapa 18</span></div>
+        <div class="txt"><p>Bajo a Pinzolo o Spiazzo y subo a la meta (unos 15 km al 5%). Luego camper hacia el Friuli (unas 3 h 30 min).</p></div>
+      </div>
+      <div class="day-card">
+        <div class="day"><b>Vie 28</b><span class="tag">Etapa 19</span></div>
+        <div class="txt"><p>Bucle por los repechos de Montaner y Castello di Caneva, llegada en Sacile. En la tarde, camper a Ovaro (alrededor de 1 h 30 min).</p></div>
+      </div>
+      <div class="day-card">
+        <div class="day"><b>Sáb 29</b><span class="tag">Etapa 20</span></div>
+        <div class="txt"><p>Subo el Zoncolan desde Ovaro con mucho margen antes del cierre. Después, camper a la zona del aeropuerto de Venecia.</p></div>
+      </div>
+      <div class="day-card">
+        <div class="day"><b>Dom 30</b><span class="tag">Etapa 21</span></div>
+        <div class="txt"><p>Devuelvo el camper y voy a Roma (avión o Frecciarossa). Rodada opcional por la Via Appia Antica y veo el circuito final.</p></div>
+      </div>
+    </div>
+
+    <div class="notice">
+      <b>Notas</b>
+      <ul>
+        <li>Desarrollo mínimo 34×34.</li>
+        <li>Ropa de abrigo para las bajadas (el Gavia puede tener nieve).</li>
+        <li>Camper pequeño tipo van de 6 m o menos.</li>
+        <li>Confirmar si aceptan devolución en domingo.</li>
+        <li>El Zoncolan suele cerrarse a vehículos antes y usa buses lanzadera.</li>
+        <li>Los horarios de cada etapa se publican unas semanas antes.</li>
+        <li>Estoy a siete semanas de Roth: subidas a ritmo controlado.</li>
+      </ul>
     </div>
   </section>
 
-  <section id="airbnbs">
-    <div class="section-head"><span class="num">03</span><h2>Airbnb's</h2></div>
-    <table class="airbnb">
-      <thead><tr><th>City / Region</th><th>Dates</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr><td>TBD — near Grande Partenza</td><td>May 7–9</td><td>Base for opening ITT + first sprint stages</td></tr>
-        <tr><td>TBD — Rest Day 1 base</td><td>May 16–17</td><td>Laundry, recovery, easy spin</td></tr>
-        <tr><td>TBD — Rest Day 2 base</td><td>May 23–24</td><td>Deep in the mountains block</td></tr>
-        <tr><td>TBD — finish city</td><td>May 30–31</td><td>Milan or Rome, depending on route</td></tr>
-      </tbody>
-    </table>
+  <section id="enlaces">
+    <div class="section-head"><span class="num">02</span><h2>Enlaces de Interés</h2></div>
+    <div class="card-grid">
+      <a class="simple-card" href="https://www.giroditalia.it/es/el-recorrido/" target="_blank" rel="noopener"><div class="chk"></div><div class="txt"><b>Recorrido oficial</b><span>giroditalia.it · mapas y perfiles de las 21 etapas</span></div></a>
+      <a class="simple-card" href="https://www.giroditalia.it/es/las-regiones-del-recorrido-del-giro/" target="_blank" rel="noopener"><div class="chk"></div><div class="txt"><b>Regiones del recorrido</b><span>giroditalia.it · las regiones por las que pasa el Giro</span></div></a>
+      <a class="simple-card" href="https://park4night.com" target="_blank" rel="noopener"><div class="chk"></div><div class="txt"><b>Park4Night</b><span>park4night.com · áreas y sitios para dormir en camper</span></div></a>
+      <a class="simple-card" href="https://www.campercontact.com" target="_blank" rel="noopener"><div class="chk"></div><div class="txt"><b>CamperContact</b><span>campercontact.com · áreas de autocaravanas con reseñas</span></div></a>
+      <a class="simple-card" href="https://www.trenitalia.com" target="_blank" rel="noopener"><div class="chk"></div><div class="txt"><b>Trenitalia</b><span>trenitalia.com · Frecciarossa Venecia–Roma para el domingo 30</span></div></a>
+      <div class="simple-card"><div class="chk"></div><div class="txt"><b>May weather patterns</b><span>Promedios históricos de mayo en Lombardía, Trentino y Friuli, sobre todo en los puertos altos</span></div></div>
+    </div>
+  </section>
+
+  <section id="donde-duermo">
+    <div class="section-head"><span class="num">03</span><h2>Dónde duermo</h2></div>
+    <div class="table-scroll">
+      <table class="airbnb">
+        <thead><tr><th>Noche</th><th>Lugar</th><th>Notas</th></tr></thead>
+        <tbody>
+          <tr><td>Lun 24</td><td>Aprica (camper)</td><td>Meta de la etapa 16</td></tr>
+          <tr><td>Mar 25</td><td>Aprica (camper)</td><td>Después del Mortirolo</td></tr>
+          <tr><td>Mié 26</td><td>Madonna di Campiglio (camper)</td><td>Puesto asegurado para la etapa 18</td></tr>
+          <tr><td>Jue 27</td><td>Sacile / Caneva (camper)</td><td>Cerca de la meta de la etapa 19</td></tr>
+          <tr><td>Vie 28</td><td>Ovaro, Comeglians o Sutrio (camper)</td><td>Al pie del Zoncolan</td></tr>
+          <tr><td>Sáb 29</td><td>Zona del aeropuerto de Venecia (camper)</td><td>Devolución del camper el domingo temprano</td></tr>
+          <tr><td>Dom 30</td><td>Roma (hotel)</td><td>Etapa final</td></tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <section id="literatura">
     <div class="section-head"><span class="num">04</span><h2>Literatura</h2></div>
     <div class="card-grid">
       <div class="simple-card"><div class="chk"></div><div class="txt"><b>Giro d'Italia history</b><span>Placeholder — swap for your usual pre-trip reading picks</span></div></div>
-      <div class="simple-card"><div class="chk"></div><div class="txt"><b>Regional cuisine guide</b><span>Matches whichever regions the route passes through</span></div></div>
+      <div class="simple-card"><div class="chk"></div><div class="txt"><b>Regional cuisine guide</b><span>For the regions along the route</span></div></div>
       <div class="simple-card"><div class="chk"></div><div class="txt"><b>Climbing profiles</b><span>Gradient guide for Dolomites &amp; Alps sectors</span></div></div>
     </div>
   </section>
@@ -289,37 +420,42 @@
 
 </div>
 
-<footer>MAGLIA ROSA PROJECTION <span class="jersey"></span> BUILT FROM THE FRANCE TOUR TEMPLATE <span class="jersey"></span> ROUTE TBD</footer>
+<footer>GIRO D'ITALIA 2027 <span class="jersey"></span> Recorrido oficial publicado por RCS Sport · Fuente: giroditalia.it</footer>
 
 <script>
+// me: "going" = Voy a estar, "transit" = En tránsito
 const stages = [
-  {n:1,  date:"Sat, May 8",  type:"tt",   from:"Grande Partenza city (TBD)", to:"TBD", dist:"~15",  elev:"~150",  note:"Opening ITT — pink jersey up for grabs day one."},
-  {n:2,  date:"Sun, May 9",  type:"flat", from:"TBD", to:"TBD", dist:"~180", elev:"~800", note:"Sprinters' stage."},
-  {n:3,  date:"Mon, May 10", type:"hilly",from:"TBD", to:"TBD", dist:"~160", elev:"~2,200", note:"Punchy finish, breakaway terrain."},
-  {n:4,  date:"Tue, May 11", type:"flat", from:"TBD", to:"TBD", dist:"~190", elev:"~600", note:"Transfer toward the mainland."},
-  {n:5,  date:"Wed, May 12", type:"mtn",  from:"TBD", to:"TBD", dist:"~150", elev:"~3,500", note:"First real GC shake-up."},
-  {n:6,  date:"Thu, May 13", type:"flat", from:"TBD", to:"TBD", dist:"~200", elev:"~700", note:"Sprint."},
-  {n:7,  date:"Fri, May 14", type:"hilly",from:"TBD", to:"TBD", dist:"~170", elev:"~2,500", note:""},
-  {n:8,  date:"Sat, May 15", type:"mtn",  from:"TBD", to:"TBD", dist:"~180", elev:"~4,500", note:"Dolomites or Alps preview."},
-  {n:9,  date:"Sun, May 16", type:"hilly",from:"TBD", to:"TBD", dist:"~150", elev:"~2,000", note:"Signature 'unusual terrain' stage — gravel sectors."},
-  {rest:1, date:"Mon, May 17", note:"Transfer day."},
-  {n:10, date:"Tue, May 18", type:"flat", from:"TBD", to:"TBD", dist:"~190", elev:"~500", note:""},
-  {n:11, date:"Wed, May 19", type:"hilly",from:"TBD", to:"TBD", dist:"~160", elev:"~2,300", note:""},
-  {n:12, date:"Thu, May 20", type:"flat", from:"TBD", to:"TBD", dist:"~210", elev:"~600", note:"Sprint."},
-  {n:13, date:"Fri, May 21", type:"tt",   from:"TBD", to:"TBD", dist:"~30",  elev:"~300", note:"Mid-race ITT — GC-defining."},
-  {n:14, date:"Sat, May 22", type:"mtn",  from:"TBD", to:"TBD", dist:"~190", elev:"~5,000", note:"High mountains begin."},
-  {n:15, date:"Sun, May 23", type:"mtn",  from:"TBD", to:"TBD", dist:"~170", elev:"~5,200", note:"Queen stage candidate #1 — summit finish."},
-  {rest:2, date:"Mon, May 24", note:"Recovery / transfer."},
-  {n:16, date:"Tue, May 25", type:"mtn",  from:"TBD", to:"TBD", dist:"~200", elev:"~5,500", note:"Dolomites."},
-  {n:17, date:"Wed, May 26", type:"flat", from:"TBD", to:"TBD", dist:"~180", elev:"~800", note:"Legs recover before the final week."},
-  {n:18, date:"Thu, May 27", type:"mtn",  from:"TBD", to:"TBD", dist:"~160", elev:"~4,800", note:""},
-  {n:19, date:"Fri, May 28", type:"mtn",  from:"TBD", to:"TBD", dist:"~180", elev:"~5,800", note:"The queen stage — summit finish."},
-  {n:20, date:"Sat, May 29", type:"mtn",  from:"TBD", to:"TBD", dist:"~130", elev:"~4,500", note:"Last GC chance — short and explosive."},
-  {n:21, date:"Sun, May 30", type:"flat", from:"TBD", to:"TBD", dist:"~130", elev:"~300", note:"Ceremonial finish — Milan or Rome."},
+  {n:1,  date:"Sáb 08/05", type:"hilly", from:"Trieste", to:"Trieste", dist:"172", note:"Unos 2.400 m de desnivel, repechos al final. Trieste fue la meta final en 2014."},
+  {n:2,  date:"Dom 09/05", type:"hilly", from:"Ljubljana", to:"Koper", dist:"166", note:"Toda en Eslovenia, unos 2.200 m. Para velocistas resistentes."},
+  {n:3,  date:"Lun 10/05", type:"hilly", from:"Cervignano del Friuli", to:"Possagno", dist:"163", note:"Unos 1.450 m, Montello y Mostaccin. Al pie del Monte Grappa."},
+  {n:4,  date:"Mar 11/05", type:"flat",  from:"Argenta", to:"Misano Adriatico (Autódromo Marco Simoncelli)", dist:"151", note:"Sprint masivo en circuito."},
+  {n:5,  date:"Mié 12/05", type:"mtn",   from:"Filottrano", to:"Sarnano-Sassotetto", dist:"139", note:"Primer final en alto (montes Sibilinos). Sale del pueblo de Scarponi."},
+  {n:6,  date:"Jue 13/05", type:"hilly", from:"Alba Adriatica", to:"Lanciano", dist:"148", note:"Abruzos, final para corredores explosivos."},
+  {n:7,  date:"Vie 14/05", type:"tt",    from:"Sulmona", to:"Campo di Giove", dist:"19,6", note:"Contrarreloj individual, segunda mitad en subida al 5%."},
+  {n:8,  date:"Sáb 15/05", type:"hilly", from:"Trasacco", to:"Napoli", dist:"219", note:"Cruce de los Apeninos. Nápoles es meta por sexto año seguido."},
+  {n:9,  date:"Dom 16/05", type:"mtn",   from:"Itri", to:"Subiaco-Monte Livata", dist:"180", note:"Final en alto en el Lacio."},
+  {rest:1, date:"Lun 17/05"},
+  {n:10, date:"Mar 18/05", type:"hilly", from:"Palombara Sabina", to:"Norcia", dist:"218", note:"Rompepiernas: Forca di Presta y Forca Ventosola, llanura de Castelluccio."},
+  {n:11, date:"Mié 19/05", type:"hilly", from:"Gualdo Tadino", to:"Scarperia (Autódromo del Mugello)", dist:"220", note:"Umbría y Toscana, final en Mugello."},
+  {n:12, date:"Jue 20/05", type:"mtn",   from:"Montecatini Terme", to:"Zeri (Passo Due Santi)", dist:"173", note:"Final en alto en Zum Zeri, para escaladores."},
+  {n:13, date:"Vie 21/05", type:"flat",  from:"Borgo Val di Taro", to:"Reggio Emilia", dist:"176", note:"Bajada hacia la llanura del Po, posible sprint."},
+  {n:14, date:"Sáb 22/05", type:"mtn",   from:"Cantù Arena", to:"Piani di Bobbio/Valtorta", dist:"187", note:"Ghisallo, Culmine di San Pietro, Alino y final en alto."},
+  {n:15, date:"Dom 23/05", type:"tt",    from:"Monza (Autódromo)", to:"Milano", dist:"37,3", note:"Contrarreloj llana y rápida, clave para la general."},
+  {rest:2, date:"Lun 24/05"},
+  {n:16, date:"Mar 25/05", type:"mtn",   from:"Sondrio", to:"Aprica", dist:"192", me:"going", note:"<b>ETAPA REINA:</b> unos 5.700 m de desnivel, Mortirolo > Gavia > Mortirolo (inédito)."},
+  {n:17, date:"Mié 26/05", type:"hilly", from:"Chiari", to:"Vo'", dist:"194", me:"transit", note:"Llana al inicio, muros de los Colli Euganei al final."},
+  {n:18, date:"Jue 27/05", type:"mtn",   from:"Rovereto", to:"Madonna di Campiglio", dist:"154", me:"going", note:"Bucle con doble Passo Durone y Passo Daone, final en alto."},
+  {n:19, date:"Vie 28/05", type:"hilly", from:"Rovereto", to:"Sacile", dist:"199", me:"going", note:"Vigolo Vattaro y Bieno, luego los repechos de Montaner y Castello di Caneva."},
+  {n:20, date:"Sáb 29/05", type:"mtn",   from:"Pordenone", to:"Monte Zoncolan", dist:"180", me:"going", note:"Passo Duron, Sella Valcalda y Zoncolan por Ovaro: 10,1 km al 11,9%, rampas de 22%."},
+  {n:21, date:"Dom 30/05", type:"flat",  from:"Roma", to:"Roma", dist:"131", me:"going", note:"Circuito urbano de unos 9 km, 8 vueltas, sprint final."},
 ];
 
 const colors = { flat:"#E10B7A", hilly:"#7a3a5c", mtn:"#1C3F5E", tt:"#B7912B" };
 const labels = { flat:"Flat", hilly:"Hilly", mtn:"Mountain", tt:"Time Trial" };
+const tags = {
+  going:   '<span class="tag">Voy a estar</span>',
+  transit: '<span class="tag transit">En tránsito</span>',
+};
 
 const el = document.getElementById('timeline');
 stages.forEach((s, i) => {
@@ -328,20 +464,20 @@ stages.forEach((s, i) => {
   if (s.rest) {
     div.className = 'stage rest';
     div.innerHTML = `
-      <div class="stage-top">REST DAY ${s.rest} · ${s.date}</div>
-      <div class="stage-route">Recovery</div>
-      <div class="stage-note">${s.note}</div>`;
+      <div class="stage-top">DÍA DE DESCANSO ${s.rest} · ${s.date}</div>
+      <div class="stage-route">Descanso</div>`;
   } else {
-    div.className = 'stage';
+    div.className = s.me === 'going' ? 'stage going' : 'stage';
     div.style.setProperty('--marker', colors[s.type]);
     div.innerHTML = `
       <div class="stage-top">
         <span class="stage-num">${String(s.n).padStart(2,'0')}</span>
         <span class="badge" style="background:${colors[s.type]}">${labels[s.type]}</span>
         <span>${s.date}</span>
+        ${s.me ? tags[s.me] : ''}
       </div>
       <div class="stage-route">${s.from}<span class="arrow">→</span>${s.to}</div>
-      <div class="stage-meta"><span><b>${s.dist}</b> km</span><span><b>${s.elev}</b> m gain</span></div>
+      <div class="stage-meta"><span><b>${s.dist}</b> km</span></div>
       ${s.note ? `<div class="stage-note">${s.note}</div>` : ''}`;
   }
   el.appendChild(div);
