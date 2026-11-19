@@ -143,76 +143,13 @@
   }
   .section-intro{margin:-18px 0 26px; font-size:15.5px; color:#54424c;}
 
-  /* ---------- STAGE TIMELINE (signature element) ---------- */
-  .timeline{position:relative; padding-left:46px;}
-  .timeline::before{
-    content:"";
-    position:absolute; left:14px; top:6px; bottom:6px; width:2px;
-    background:repeating-linear-gradient(to bottom, var(--pink) 0 10px, transparent 10px 16px);
-  }
-  .stage{
-    position:relative; padding:18px 20px 18px 22px;
-    margin-bottom:14px;
-    background:#fff;
-    border:1px solid var(--line);
-    border-radius:10px;
-    box-shadow:var(--shadow);
-    opacity:0; transform:translateY(14px);
-    animation:rise .6s ease forwards;
-  }
-  .stage:nth-child(n){animation-delay:calc(var(--i, 0) * 22ms);}
-  @keyframes rise{to{opacity:1; transform:none;}}
-
-  .stage::before{
-    content:"";
-    position:absolute; left:-38px; top:24px;
-    width:14px; height:14px; border-radius:50%;
-    background:var(--marker, var(--pink));
-    border:3px solid var(--paper);
-    box-shadow:0 0 0 2px var(--marker, var(--pink));
-  }
-  .stage.rest{
-    background:transparent; box-shadow:none; border:1px dashed var(--line);
-  }
-  .stage.rest::before{background:var(--ink); box-shadow:0 0 0 2px var(--ink);}
-  .stage.going{border-color:rgba(151,16,79,0.45);}
-
-  .stage-top{
-    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
-    font-family:var(--mono); font-size:12.5px; color:#6b5763;
-  }
-  .stage-num{
-    font-family:var(--display); font-size:26px; color:var(--pink-deep); letter-spacing:.02em;
-    min-width:38px;
-  }
-  .badge{
-    font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase;
-    padding:3px 9px; border-radius:999px; color:#fff; background:var(--marker,var(--pink));
-  }
+  /* ---------- TAGS ---------- */
   .tag{
     font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; font-weight:700;
     padding:2px 9px; border-radius:999px;
     border:1.5px solid var(--pink-deep); color:var(--pink-deep); background:var(--pink-pale);
   }
   .tag.transit{border-style:dashed; border-color:#8a7580; color:#6b5763; background:transparent; font-weight:500;}
-  .stage-route{
-    font-family:var(--serif); font-size:17px; margin:8px 0 4px; color:var(--ink);
-  }
-  .stage-route .arrow{color:var(--pink); margin:0 6px; font-family:var(--mono);}
-  .stage-meta{
-    display:flex; gap:18px; flex-wrap:wrap;
-    font-family:var(--mono); font-size:12px; color:#7a6873; margin-top:6px;
-  }
-  .stage-meta span b{color:var(--ink); font-weight:600;}
-  .stage-note{font-size:13.5px; color:#54424c; margin-top:6px; font-style:italic;}
-  .stage-note b{font-style:normal; color:var(--pink-deep);}
-
-  .stage.rest .stage-route{font-family:var(--display); font-size:22px; letter-spacing:.03em; color:var(--ink);}
-
-  /* legend */
-  .legend{display:flex; flex-wrap:wrap; gap:14px; margin:22px 0 40px; font-family:var(--mono); font-size:12px;}
-  .legend .item{display:flex; align-items:center; gap:7px; color:#6b5763;}
-  .legend .swatch{width:11px; height:11px; border-radius:3px;}
 
   /* ---------- MI SEMANA ---------- */
   .week{display:grid; gap:12px;}
@@ -269,10 +206,6 @@
     .stat{padding:12px 6px 10px;}
     .stat span{font-size:10px; letter-spacing:.03em;}
     .status-pill{font-size:11.5px; padding:9px 14px; border-radius:18px; text-align:left;}
-    .timeline{padding-left:36px;}
-    .timeline::before{left:10px;}
-    .stage{padding:16px;}
-    .stage::before{left:-32px;}
     .day-card{grid-template-columns:1fr; gap:8px;}
     .day-card .day{flex-direction:row; align-items:center; gap:10px;}
     .notice{padding:16px 18px;}
@@ -297,23 +230,8 @@
 
 <div class="wrap">
 
-  <section id="etapas">
-    <div class="section-head"><span class="num">01</span><h2>Etapas</h2></div>
-    <p class="section-intro">21 etapas + 2 días de descanso.</p>
-
-    <div class="legend">
-      <div class="item"><span class="swatch" style="background:#E10B7A"></span>Flat / Sprint</div>
-      <div class="item"><span class="swatch" style="background:#7a3a5c"></span>Hilly</div>
-      <div class="item"><span class="swatch" style="background:#1C3F5E"></span>Mountain</div>
-      <div class="item"><span class="swatch" style="background:#B7912B"></span>Time Trial</div>
-      <div class="item"><span class="swatch" style="background:#221721"></span>Rest Day</div>
-    </div>
-
-    <div class="timeline" id="timeline"></div>
-  </section>
-
   <section id="mi-semana">
-    <div class="section-head"><span class="num">01B</span><h2>Mi semana: camper + bici</h2></div>
+    <div class="section-head"><span class="num">01</span><h2>Mi semana: camper + bici</h2></div>
     <p class="section-intro">La fórmula: dejo el camper en la meta la noche anterior, en la mañana bajo y subo el puerto final antes del cierre de vías, y veo la llegada al lado del camper.</p>
 
     <div class="week">
@@ -421,68 +339,6 @@
 </div>
 
 <footer>GIRO D'ITALIA 2027 <span class="jersey"></span> Recorrido oficial publicado por RCS Sport · Fuente: giroditalia.it</footer>
-
-<script>
-// me: "going" = Voy a estar, "transit" = En tránsito
-const stages = [
-  {n:1,  date:"Sáb 08/05", type:"hilly", from:"Trieste", to:"Trieste", dist:"172", note:"Unos 2.400 m de desnivel, repechos al final. Trieste fue la meta final en 2014."},
-  {n:2,  date:"Dom 09/05", type:"hilly", from:"Ljubljana", to:"Koper", dist:"166", note:"Toda en Eslovenia, unos 2.200 m. Para velocistas resistentes."},
-  {n:3,  date:"Lun 10/05", type:"hilly", from:"Cervignano del Friuli", to:"Possagno", dist:"163", note:"Unos 1.450 m, Montello y Mostaccin. Al pie del Monte Grappa."},
-  {n:4,  date:"Mar 11/05", type:"flat",  from:"Argenta", to:"Misano Adriatico (Autódromo Marco Simoncelli)", dist:"151", note:"Sprint masivo en circuito."},
-  {n:5,  date:"Mié 12/05", type:"mtn",   from:"Filottrano", to:"Sarnano-Sassotetto", dist:"139", note:"Primer final en alto (montes Sibilinos). Sale del pueblo de Scarponi."},
-  {n:6,  date:"Jue 13/05", type:"hilly", from:"Alba Adriatica", to:"Lanciano", dist:"148", note:"Abruzos, final para corredores explosivos."},
-  {n:7,  date:"Vie 14/05", type:"tt",    from:"Sulmona", to:"Campo di Giove", dist:"19,6", note:"Contrarreloj individual, segunda mitad en subida al 5%."},
-  {n:8,  date:"Sáb 15/05", type:"hilly", from:"Trasacco", to:"Napoli", dist:"219", note:"Cruce de los Apeninos. Nápoles es meta por sexto año seguido."},
-  {n:9,  date:"Dom 16/05", type:"mtn",   from:"Itri", to:"Subiaco-Monte Livata", dist:"180", note:"Final en alto en el Lacio."},
-  {rest:1, date:"Lun 17/05"},
-  {n:10, date:"Mar 18/05", type:"hilly", from:"Palombara Sabina", to:"Norcia", dist:"218", note:"Rompepiernas: Forca di Presta y Forca Ventosola, llanura de Castelluccio."},
-  {n:11, date:"Mié 19/05", type:"hilly", from:"Gualdo Tadino", to:"Scarperia (Autódromo del Mugello)", dist:"220", note:"Umbría y Toscana, final en Mugello."},
-  {n:12, date:"Jue 20/05", type:"mtn",   from:"Montecatini Terme", to:"Zeri (Passo Due Santi)", dist:"173", note:"Final en alto en Zum Zeri, para escaladores."},
-  {n:13, date:"Vie 21/05", type:"flat",  from:"Borgo Val di Taro", to:"Reggio Emilia", dist:"176", note:"Bajada hacia la llanura del Po, posible sprint."},
-  {n:14, date:"Sáb 22/05", type:"mtn",   from:"Cantù Arena", to:"Piani di Bobbio/Valtorta", dist:"187", note:"Ghisallo, Culmine di San Pietro, Alino y final en alto."},
-  {n:15, date:"Dom 23/05", type:"tt",    from:"Monza (Autódromo)", to:"Milano", dist:"37,3", note:"Contrarreloj llana y rápida, clave para la general."},
-  {rest:2, date:"Lun 24/05"},
-  {n:16, date:"Mar 25/05", type:"mtn",   from:"Sondrio", to:"Aprica", dist:"192", me:"going", note:"<b>ETAPA REINA:</b> unos 5.700 m de desnivel, Mortirolo > Gavia > Mortirolo (inédito)."},
-  {n:17, date:"Mié 26/05", type:"hilly", from:"Chiari", to:"Vo'", dist:"194", me:"transit", note:"Llana al inicio, muros de los Colli Euganei al final."},
-  {n:18, date:"Jue 27/05", type:"mtn",   from:"Rovereto", to:"Madonna di Campiglio", dist:"154", me:"going", note:"Bucle con doble Passo Durone y Passo Daone, final en alto."},
-  {n:19, date:"Vie 28/05", type:"hilly", from:"Rovereto", to:"Sacile", dist:"199", me:"going", note:"Vigolo Vattaro y Bieno, luego los repechos de Montaner y Castello di Caneva."},
-  {n:20, date:"Sáb 29/05", type:"mtn",   from:"Pordenone", to:"Monte Zoncolan", dist:"180", me:"going", note:"Passo Duron, Sella Valcalda y Zoncolan por Ovaro: 10,1 km al 11,9%, rampas de 22%."},
-  {n:21, date:"Dom 30/05", type:"flat",  from:"Roma", to:"Roma", dist:"131", me:"going", note:"Circuito urbano de unos 9 km, 8 vueltas, sprint final."},
-];
-
-const colors = { flat:"#E10B7A", hilly:"#7a3a5c", mtn:"#1C3F5E", tt:"#B7912B" };
-const labels = { flat:"Flat", hilly:"Hilly", mtn:"Mountain", tt:"Time Trial" };
-const tags = {
-  going:   '<span class="tag">Voy a estar</span>',
-  transit: '<span class="tag transit">En tránsito</span>',
-};
-
-const el = document.getElementById('timeline');
-stages.forEach((s, i) => {
-  const div = document.createElement('div');
-  div.style.setProperty('--i', i);
-  if (s.rest) {
-    div.className = 'stage rest';
-    div.innerHTML = `
-      <div class="stage-top">DÍA DE DESCANSO ${s.rest} · ${s.date}</div>
-      <div class="stage-route">Descanso</div>`;
-  } else {
-    div.className = s.me === 'going' ? 'stage going' : 'stage';
-    div.style.setProperty('--marker', colors[s.type]);
-    div.innerHTML = `
-      <div class="stage-top">
-        <span class="stage-num">${String(s.n).padStart(2,'0')}</span>
-        <span class="badge" style="background:${colors[s.type]}">${labels[s.type]}</span>
-        <span>${s.date}</span>
-        ${s.me ? tags[s.me] : ''}
-      </div>
-      <div class="stage-route">${s.from}<span class="arrow">→</span>${s.to}</div>
-      <div class="stage-meta"><span><b>${s.dist}</b> km</span></div>
-      ${s.note ? `<div class="stage-note">${s.note}</div>` : ''}`;
-  }
-  el.appendChild(div);
-});
-</script>
 
 </body>
 </html>
